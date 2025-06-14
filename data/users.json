@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Sharma",
+    "email": "alice@example.com",
+    "password": "hashedpassword1",
+    "role": "user",
+    "createdAt": "2025-06-01T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Bob Mehta",
+    "email": "bob@example.com",
+    "password": "hashedpassword2",
+    "role": "admin",
+    "createdAt": "2025-06-02T12:30:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Charlie Singh",
+    "email": "charlie@example.com",
+    "password": "hashedpassword3",
+    "role": "user",
+    "createdAt": "2025-06-03T14:20:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Diana Verma",
+    "email": "diana@example.com",
+    "password": "hashedpassword4",
+    "role": "instructor",
+    "createdAt": "2025-06-04T09:10:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Ethan Roy",
+    "email": "ethan@example.com",
+    "password": "hashedpassword5",
+    "role": "user",
+    "createdAt": "2025-06-05T17:45:00Z"
+  }
+]

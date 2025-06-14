@@ -1,0 +1,128 @@
+[
+  {
+    "id": 4,
+    "name": "The City Wanderer",
+    "duration": 3,
+    "maxGroupSize": 20,
+    "difficulty": "easy",
+    "ratingsAverage": 4.3,
+    "ratingsQuantity": 25,
+    "price": 297,
+    "summary": "Discover the hidden gems of New York City",
+    "description": "From street food to skyscrapers, this tour covers it all...",
+    "startLocation": {
+      "description": "New York, USA",
+      "coordinates": [
+        -74.006,
+        40.7128
+      ],
+      "address": "200 Broadway, New York",
+      "type": "Point"
+    }
+  },
+  {
+    "id": 5,
+    "name": "The Hero",
+    "duration": 6,
+    "maxGroupSize": 12,
+    "difficulty": "medium",
+    "ratingsAverage": 4.6,
+    "ratingsQuantity": 18,
+    "price": 897,
+    "summary": "Sahara desert camel trek and cultural immersion",
+    "description": "Ride camels through golden dunes, stay in Berber camps...",
+    "startLocation": {
+      "description": "Merzouga, Morocco",
+      "coordinates": [
+        -3.9784,
+        31.1
+      ],
+      "address": "Camel Camp, Merzouga",
+      "type": "Point"
+    }
+  },
+  {
+    "id": 6,
+    "name": "The Magic",
+    "duration": 10,
+    "maxGroupSize": 8,
+    "difficulty": "difficult",
+    "ratingsAverage": 4.8,
+    "ratingsQuantity": 41,
+    "price": 1497,
+    "summary": "Live in the Amazon jungle and learn survival skills",
+    "description": "Spend 10 days with expert survivalists deep in the jungle...",
+    "startLocation": {
+      "description": "Manaus, Brazil",
+      "coordinates": [
+        -60.0258,
+        -3.119
+      ],
+      "address": "Amazon Base, Manaus",
+      "type": "Point"
+    }
+  },
+  {
+    "id": 8,
+    "name": "The Island Hopper",
+    "duration": 9,
+    "maxGroupSize": 16,
+    "difficulty": "medium",
+    "ratingsAverage": 4.4,
+    "ratingsQuantity": 28,
+    "price": 1199,
+    "summary": "Hop across the beautiful islands of the Philippines",
+    "description": "White sand beaches, snorkeling, and island culture await...",
+    "startLocation": {
+      "description": "Cebu, Philippines",
+      "coordinates": [
+        123.8854,
+        10.3157
+      ],
+      "address": "Island Pier, Cebu",
+      "type": "Point"
+    }
+  },
+  {
+    "id": 9,
+    "name": "The Cultural Route",
+    "duration": 7,
+    "maxGroupSize": 30,
+    "difficulty": "easy",
+    "ratingsAverage": 4.2,
+    "ratingsQuantity": 19,
+    "price": 799,
+    "summary": "Experience India's rich cultural heritage",
+    "description": "Visit historical monuments, taste traditional food, and more...",
+    "startLocation": {
+      "description": "Delhi, India",
+      "coordinates": [
+        77.1025,
+        28.7041
+      ],
+      "address": "Connaught Place, Delhi",
+      "type": "Point"
+    }
+  },
+  {
+    "id": 10,
+    "name": "The Arctic Explorer",
+    "duration": 8,
+    "maxGroupSize": 10,
+    "difficulty": "difficult",
+    "ratingsAverage": 4.6,
+    "ratingsQuantity": 22,
+    "price": 2099,
+    "summary": "Venture into the Arctic Circle and witness the Northern Lights",
+    "description": "Travel across snow plains, meet Sami tribes, and see the aurora...",
+    "startLocation": {
+      "description": "Tromsø, Norway",
+      "coordinates": [
+        18.9553,
+        69.6496
+      ],
+      "address": "Polar Station, Tromsø",
+      "type": "Point"
+    }
+  }
+]
