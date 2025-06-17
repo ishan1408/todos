@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next) => {
-  console.error("ERROR 💥", err);
+  console.error("ERROR ", err);
 
   let statusCode = err.statusCode || 500;
   let status = err.status || 'error';
