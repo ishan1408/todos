@@ -1,83 +1,109 @@
-const fs = require("fs");
-const path = require("path");
+const User = require("../models/User");
+const APIFeatures = require("../utils/apiFeatures");
 
-const usersFilePath = path.join(__dirname, "../data/users.json");
-
-let users = [];
-try {
-  const data = fs.readFileSync(usersFilePath, "utf-8");
-  users = JSON.parse(data);
-} catch (err) {
-  console.error("Error reading users file:", err.message);
-}
-
-exports.getAllUsers = (req, res) => {
+exports.getAllUsers = async (req, res) => {
   try {
+    const features = new APIFeatures(User.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const users = await features.query;
+
     res.status(200).json({
       status: "success",
       results: users.length,
       data: users,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ status: "error", message: "Failed to retrieve users" });
+    next(err);
   }
 };
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
   try {
-    const newUser = { id: Date.now(), ...req.body };
-    users.push(newUser);
-    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+    const newUser = await User.create(req.body);
     res.status(201).json({
       status: "success",
       data: newUser,
     });
   } catch (err) {
-    res.status(500).json({ status: "error", message: "Failed to create user" });
+    console.error("Create User Error:", err);
+    next(err);
   }
 };
 
-exports.updateUser = (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
-    const id = +req.params.id;
-    const idx = users.findIndex((u) => u.id === id);
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-    if (idx === -1) {
-      return res
-        .status(404)
-        .json({ status: "fail", message: "User not found" });
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
     }
-
-    users[idx] = { ...users[idx], ...req.body };
-    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
 
     res.status(200).json({
       status: "success",
-      data: users[idx],
+      data: updatedUser,
     });
   } catch (err) {
-    res.status(500).json({ status: "error", message: "Failed to update user" });
+    next(err);
   }
 };
 
-exports.deleteUser = (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
-    const id = +req.params.id;
-    const userExists = users.some((u) => u.id === id);
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
 
-    if (!userExists) {
-      return res
-        .status(404)
-        .json({ status: "fail", message: "User not found" });
+    if (!deletedUser) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
     }
 
-    users = users.filter((u) => u.id !== id);
-    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
-
-    res.status(204).json();
+    res.status(200).json({
+      status: "success",
+      message: "User deleted successfully",
+    });
   } catch (err) {
-    res.status(500).json({ status: "error", message: "Failed to delete user" });
+    next(err);
+  }
+};
+
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Please provide email and password",
+      });
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+      return res.status(401).json({
+        status: "fail",
+        message: "Incorrect email or password",
+      });
+    }
+
+    const token = signToken(user._id);
+
+    res.status(200).json({
+      status: "success",
+      token,
+    });
+  } catch (err) {
+    next(err);
   }
 };

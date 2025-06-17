@@ -1,95 +1,66 @@
-const fs = require("fs");
-const path = require("path");
+const Tour = require("../models/Tour");
 
-const toursFilePath = path.join(__dirname, "../data/travel.json");
-
-let tours = [];
-try {
-  const data = fs.readFileSync(toursFilePath, "utf-8");
-  tours = JSON.parse(data);
-} catch (err) {
-  console.error("Error reading tours file:", err.message);
-}
-
-exports.getAllTours = (req, res) => {
+exports.getAllTours = async (req, res) => {
   try {
+    const tours = await Tour.find();
     res.status(200).json({
       status: "success",
       results: tours.length,
       data: tours,
     });
   } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "Failed to retrieve tours",
-    });
+    next(err);
   }
 };
 
-exports.createTour = (req, res) => {
+exports.createTour = async (req, res) => {
   try {
-    const newTour = { id: Date.now(), ...req.body };
-    tours.push(newTour);
-    fs.writeFileSync(toursFilePath, JSON.stringify(tours, null, 2));
+    const newTour = await Tour.create(req.body);
     res.status(201).json({
       status: "success",
       data: newTour,
     });
   } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "Failed to create tour",
-    });
+    next(err);
   }
 };
 
-exports.updateTour = (req, res) => {
+exports.updateTour = async (req, res) => {
   try {
-    const id = +req.params.id;
-    const idx = tours.findIndex((t) => t.id === id);
+    const updatedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-    if (idx === -1) {
+    if (!updatedTour) {
       return res.status(404).json({
         status: "fail",
         message: "Tour not found",
       });
     }
-
-    tours[idx] = { ...tours[idx], ...req.body };
-    fs.writeFileSync(toursFilePath, JSON.stringify(tours, null, 2));
 
     res.status(200).json({
       status: "success",
-      data: tours[idx],
+      data: updatedTour,
     });
   } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "Failed to update tour",
-    });
+    next(err);
   }
 };
 
-exports.deleteTour = (req, res) => {
+exports.deleteTour = async (req, res) => {
   try {
-    const id = +req.params.id;
-    const exists = tours.some((t) => t.id === id);
+    const tour = await Tour.findByIdAndDelete(req.params.id);
 
-    if (!exists) {
+    if (!tour) {
       return res.status(404).json({
         status: "fail",
         message: "Tour not found",
       });
     }
 
-    tours = tours.filter((t) => t.id !== id);
-    fs.writeFileSync(toursFilePath, JSON.stringify(tours, null, 2));
-
     res.status(204).json();
   } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "Failed to delete tour",
-    });
+    next(err);
   }
 };
