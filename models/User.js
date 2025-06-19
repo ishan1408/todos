@@ -12,11 +12,6 @@ const userSchema = new mongoose.Schema({
     required: [true, "A user must have an email"],
     unique: true,
   },
-  role:{
-    type:String,
-    enum: ['user','admin'],
-    default:'user'
-  },
   password: {
     type: String,
     required: [true, "A user must have a password"],
@@ -35,7 +30,9 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
 });
 
+//document middleware - runs before save(), create() > (hooks)
 userSchema.pre('save',async function(next){
+  console.log("document middleware is running")
   if(!this.isModified('password')) return next()
   this.password = await bcrypt.hash(this.password,12) 
   next()

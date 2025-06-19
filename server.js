@@ -1,22 +1,47 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const helmet = require("helmet");
 const connectDB = require("./config/db");
 const tourRoutes = require("./routes/tourRoutes");
 const userRoutes = require("./routes/userRoutes");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
+const rateLimit = require('express-rate-limit')
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 dotenv.config();
 connectDB();
 
 const app = express();
-app.use(express.json());
+app.use(helmet())
 
-app.use("/tours", tourRoutes);
-app.use("/users", userRoutes);
+const limiter = rateLimit({
+  max:100,
+  windowMs: 60 * 60 * 1000,
+  message:"Too many requests"
+})
+
+app.use('/api',limiter)
+
+app.use(
+  hpp({
+    whitelist: ['duration', 'difficulty'],
+  })
+);
+
+app.use(express.json({limit:'10kb'}));
+app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(xss());
+
+app.use("/api/tours", tourRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+
 app.use(errorController);
-app.use("/auth", authRoutes);
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

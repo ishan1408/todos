@@ -5,16 +5,26 @@ class APIFeatures {
   }
 
   filter() {
-    const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach(el => delete queryObj[el]);
+  const queryObj = { ...this.queryString };
+  const excludedFields = ['page', 'sort', 'limit', 'fields'];
+  excludedFields.forEach(el => delete queryObj[el]);
 
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-    this.query = this.query.find(JSON.parse(queryStr));
-
-    return this;
+  for (let key in queryObj) {
+    if (Array.isArray(queryObj[key])) {
+      const whitelist = ['difficulty', 'duration'];
+      if (!whitelist.includes(key)) {
+        queryObj[key] = queryObj[key][queryObj[key].length - 1];
+      }
+    }
   }
+
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+  this.query = this.query.find(JSON.parse(queryStr));
+  return this;
+}
+
 
   sort() {
     if (this.queryString.sort) {
