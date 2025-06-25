@@ -1,15 +1,25 @@
 const Tour = require("../models/Tour");
 const APIFeatures = require("../utils/apiFeatures");
+const Factory = require("../controllers/handlerFactory")
+const catchAsync = require('../utils/catchAsync')
 
-exports.getAllTours = async (req, res) => {
+exports.getAllTours = async (req, res, next) => {
   try {
     const features = new APIFeatures(Tour.find(), req.query)
-  .filter()
-  .sort()
-  .limitFields()
-  .paginate();
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
 
-const tours = await features.query;
+    const tours = await features.query
+      .populate({
+        path: "guides",
+        select: "name email role"
+      })
+      .populate({
+        path: "reviews",
+        select: "review rating createdAt"
+      });
 
     res.status(200).json({
       status: "success",
@@ -21,6 +31,33 @@ const tours = await features.query;
   }
 };
 
+exports.getTourById = async (req, res, next) => {
+  try {
+    const tour = await Tour.findById(req.params.id).populate({
+      path: 'guides',
+      select: 'name email role'
+    }).populate({
+        path: 'reviews',
+        select: 'review rating createdAt'
+      });
+
+    if (!tour) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Tour not found'
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: tour
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 exports.getTourStats = async (req, res, next) => {
   try {
     const stats = await Tour.aggregate([
@@ -29,22 +66,22 @@ exports.getTourStats = async (req, res, next) => {
       },
       {
         $group: {
-          _id: '$difficulty',
+          _id: "$difficulty",
           numTours: { $sum: 1 },
-          numRatings: { $sum: '$ratingsQuantity' },
-          avgRating: { $avg: '$ratingsAverage' },
-          avgPrice: { $avg: '$price' },
-          minPrice: { $min: '$price' },
-          maxPrice: { $max: '$price' },
+          numRatings: { $sum: "$ratingsQuantity" },
+          avgRating: { $avg: "$ratingsAverage" },
+          avgPrice: { $avg: "$price" },
+          minPrice: { $min: "$price" },
+          maxPrice: { $max: "$price" },
         },
       },
       {
         $sort: { avgPrice: 1 },
-      }
+      },
     ]);
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: stats,
     });
   } catch (err) {
@@ -58,98 +95,77 @@ exports.getMonthlyPlan = async (req, res, next) => {
 
     const plan = await Tour.aggregate([
       {
-        $unwind: '$startDates'
+        $unwind: "$startDates",
       },
       {
         $match: {
           startDates: {
             $gte: new Date(`${year}-01-01`),
-            $lte: new Date(`${year}-12-31`)
-          }
-        }
+            $lte: new Date(`${year}-12-31`),
+          },
+        },
       },
       {
         $group: {
-          _id: { $month: '$startDates' },
+          _id: { $month: "$startDates" },
           numTourStarts: { $sum: 1 },
-          tours: { $push: '$name' }
-        }
+          tours: { $push: "$name" },
+        },
       },
       {
-        $addFields: { month: '$_id' }
+        $addFields: { month: "$_id" },
       },
       {
-        $project: { _id: 0 }
+        $project: { _id: 0 },
       },
       {
-        $sort: { numTourStarts: -1 }
+        $sort: { numTourStarts: -1 },
       },
       {
-        $limit: 12
-      }
+        $limit: 12,
+      },
     ]);
 
     res.status(200).json({
-      status: 'success',
-      data: plan
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.createTour = async (req, res) => {
-  try {
-    const newTour = await Tour.create(req.body);
-    res.status(201).json({
       status: "success",
-      data: newTour,
+      data: plan,
     });
   } catch (err) {
     next(err);
   }
 };
 
-exports.updateTour = async (req, res) => {
-  try {
-    const updatedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+exports.createTour = Factory.createOne(Tour)
+exports.updateTour = Factory.updateOne(Tour)
+exports.deleteTour = Factory.deleteOne(Tour)
 
-    if (!updatedTour) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Tour not found",
-      });
+
+const AppError = require('../utils/appError');
+
+exports.getTourWithin = (req, res, next) => {
+  const { distance, latlong, unit } = req.params;
+
+  if (!latlong) {
+    return next(new AppError("Please provide latlong in format lat,lng", 400));
+  }
+
+  const [lat, lng] = latlong.split(',');
+
+  if (!lat || !lng) {
+    return next(new AppError("Please provide valid coordinates in lat,lng format", 400));
+  }
+
+  const cleanUnit = unit.trim();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      distance,
+      location: {
+        latitude: lat,
+        longitude: lng
+      },
+      unit: cleanUnit
     }
-
-    res.status(200).json({
-      status: "success",
-      data: updatedTour,
-    });
-  } catch (err) {
-    next(err);
-  }
+  });
 };
-
-exports.deleteTour = async (req, res, next) => {
-  try {
-    const tour = await Tour.findByIdAndDelete(req.params.id);
-
-    if (!tour) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Tour not found",
-      });
-    }
-
-    res.status(200).json({
-      status: "success",
-      message: "Tour deleted successfully",
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-

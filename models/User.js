@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "admin"],
+    enum: ["user", "admin","guide"],
     default: "user",
   },
   createdAt: {
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
 
 //document middleware - runs before save(), create() > (hooks)
 userSchema.pre('save',async function(next){
-  console.log("document middleware is running")
+  // console.log("document middleware is running")
   if(!this.isModified('password')) return next()
   this.password = await bcrypt.hash(this.password,12) 
   next()

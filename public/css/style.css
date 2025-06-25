@@ -1,0 +1,286 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #3b3a3a; 
+  color: #f0f0f0;           
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header,
+footer {
+  background-color: #2d2d30;
+  color: #f0f0f0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(255 255 255 / 0.1);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  gap: 40px;
+  padding-left: 10px;
+}
+
+.nav-left {
+  justify-content: flex-start;
+}
+
+.nav-right {
+  justify-content: flex-end;
+}
+
+nav ul li a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  display: inline-block;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+  background-color: #ffd700; /* gold background on hover */
+  color: #121212;
+  outline: none;
+}
+
+.nav-btn,
+.logout-btn {
+  height: 40px;
+  background: none;
+  border: none;
+  background: #1e1e1e;
+margin-right: 10px;
+  color: #f0f0f0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-btn:hover,
+.nav-btn:focus,
+.logout-btn:hover,
+.logout-btn:focus {
+  background-color: #ffd700;
+  color: #121212;
+  outline: none;
+}
+
+#map {
+  width: 100%;
+  max-width: 900px;
+  height: 320px;
+  margin: 30px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255 215 0 / 0.3);
+}
+
+form {
+  max-width: 420px;
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255 255 255 / 0.1);
+}
+
+input,
+button {
+
+  width: 100%;
+  padding: 12px 15px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+input {
+  background: #2e2e2e;
+  color: #f0f0f0;
+  box-shadow: inset 0 0 5px rgba(255 255 255 / 0.05);
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+input:focus {
+  outline: none;
+  background-color: #3a3a3a;
+  box-shadow: 0 0 8px #ffd700;
+}
+
+button {
+  background-color: #ffd700;
+  color: #121212;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(255 215 0 / 0.6);
+}
+
+button:hover,
+button:focus {
+  background-color: #e6c200;
+  box-shadow: 0 6px 12px rgba(230 194 0 / 0.8);
+  outline: none;
+}
+
+.tour-container {
+  max-width: 1200px;
+  margin: 40px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+  padding: 0 15px;
+}
+
+.tour-card {
+  background-color: #1e1e1e;
+  padding: 25px 20px;
+  border-radius: 14px;
+  box-shadow: 0 0 15px rgba(255 255 255 / 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tour-card:hover,
+.tour-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(255 215 0 / 0.4);
+}
+h1{
+  text-align: center;
+}
+.tour-card h2,
+.tour-card h3,
+.tour-card p {
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.tour-card h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+.tour-card p {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+footer{
+  margin-top: 100px;
+}
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Heading */
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffd700;
+}
+
+/* Description */
+.tour-details .description {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #ccc;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.info-grid p {
+  background-color: #2a2a2a;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: #f0f0f0;
+  font-weight: 500;
+}
+
+/* Guides List */
+.guides-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.guides-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+  color: #ccc;
+}
+
+/* Reviews Section */
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-box {
+  background-color: #252525;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid #ffd700;
+  color: #ddd;
+}
+
+.review-box small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.marker {
+  background-image: url('https://docs.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png');
+  background-size: cover;
+  width: 30px;
+  height: 40px;
+  cursor: pointer;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}

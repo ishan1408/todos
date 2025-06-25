@@ -1,0 +1,13 @@
+header
+  nav
+    .nav-container
+      ul.nav-left
+        li: a(href="/") Home
+        li: a(href="/account") My Account
+      ul.nav-right
+        if user
+          li
+            form(action="/logout", method="POST")
+              button(type="submit", class="nav-btn") Logout
+        else
+          li: a(href="/login", class="nav-btn") Login

@@ -1,0 +1,10 @@
+extends base
+
+block content
+  h1 My Account
+  form(action="/api/users/updateMe", method="POST")
+    label(for="name") Name:
+    input(type="text", name="name", value=user.name)
+    label(for="email") Email:
+    input(type="email", name="email", value=user.email)
+    button(type="submit") Update

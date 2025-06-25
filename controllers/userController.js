@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const APIFeatures = require("../utils/apiFeatures");
+const Factory = require("../controllers/handlerFactory")
+
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -21,61 +23,19 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.createUser = async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.status(201).json({
-      status: "success",
-      data: newUser,
-    });
-  } catch (err) {
-    console.error("Create User Error:", err);
-    next(err);
-  }
-};
+exports.getMe = (req,res,next) => {
+  req.params.id = req.user.id
+  next()
+}
 
-exports.updateUser = async (req, res) => {
-  try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+exports.getUser = Factory.getOne(User);
 
-    if (!updatedUser) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found",
-      });
-    }
 
-    res.status(200).json({
-      status: "success",
-      data: updatedUser,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+exports.createUser = Factory.createOne(User)
 
-exports.deleteUser = async (req, res) => {
-  try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
+exports.updateUser = Factory.deleteOne(User);
 
-    if (!deletedUser) {
-      return res.status(404).json({
-        status: "fail",
-        message: "User not found",
-      });
-    }
-
-    res.status(200).json({
-      status: "success",
-      message: "User deleted successfully",
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+exports.deleteUser = Factory.deleteOne(User);
 
 exports.login = async (req, res, next) => {
   try {

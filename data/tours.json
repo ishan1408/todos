@@ -1,0 +1,104 @@
+[
+  {
+    "_id": "665502bb5829f7cda07e3146",
+    "name": "The Forest Hiker",
+    "duration": 5,
+    "maxGroupSize": 25,
+    "difficulty": "medium",
+    "price": 497,
+    "summary": "Breathtaking hike through the Canadian Rockies",
+    "description": "A challenging but rewarding adventure through dense forests and mountain views.",
+    "startDates": ["2025-07-01T10:00:00.000Z", "2025-08-15T10:00:00.000Z"],
+    "startLocation": {
+      "type": "Point",
+      "coordinates": [-122.4194, 37.7749],
+      "address": "San Francisco, CA, USA",
+      "description": "Tour starting point in the city"
+    },
+    "locations": [
+      {
+        "type": "Point",
+        "coordinates": [-122.414, 37.776],
+        "address": "Golden Gate Park, SF",
+        "description": "Scenic green park",
+        "day": 1
+      },
+      {
+        "type": "Point",
+        "coordinates": [-122.4862, 37.7694],
+        "address": "Presidio",
+        "description": "Historic military outpost",
+        "day": 2
+      }
+    ],
+    "guides": ["665502bb5829f7cda07e3142"]
+  },
+  {
+    "_id": "665502bb5829f7cda07e3147",
+    "name": "Desert Safari Adventure",
+    "duration": 3,
+    "maxGroupSize": 15,
+    "difficulty": "easy",
+    "price": 299,
+    "summary": "Exciting desert safari in the Arabian dunes",
+    "description": "Enjoy camel rides, sandboarding, and star-lit nights in the desert.",
+    "startDates": ["2025-09-10T07:00:00.000Z", "2025-10-20T07:00:00.000Z"],
+    "startLocation": {
+      "type": "Point",
+      "coordinates": [55.2744, 25.1972],
+      "address": "Dubai, UAE",
+      "description": "Meeting point at the base camp"
+    },
+    "locations": [
+      {
+        "type": "Point",
+        "coordinates": [55.296249, 25.276987],
+        "address": "Downtown Dubai",
+        "description": "Orientation and gear check",
+        "day": 1
+      },
+      {
+        "type": "Point",
+        "coordinates": [55.3095, 25.2048],
+        "address": "Desert Camp",
+        "description": "Desert camping under the stars",
+        "day": 2
+      }
+    ],
+    "guides": ["665502bb5829f7cda07e3142"]
+  },
+  {
+    "_id": "665502bb5829f7cda07e3148",
+    "name": "The Snow Explorer",
+    "duration": 7,
+    "maxGroupSize": 10,
+    "difficulty": "difficult",
+    "price": 899,
+    "summary": "An epic trek through snowy alpine terrain",
+    "description": "Snowshoe through pristine snowfields, staying in cozy cabins at night.",
+    "startDates": ["2025-12-01T09:00:00.000Z"],
+    "startLocation": {
+      "type": "Point",
+      "coordinates": [10.7522, 59.9139],
+      "address": "Oslo, Norway",
+      "description": "Begin your adventure from the capital"
+    },
+    "locations": [
+      {
+        "type": "Point",
+        "coordinates": [10.75, 60.0],
+        "address": "Nordmarka Forest",
+        "description": "Snow-covered pine forests",
+        "day": 1
+      },
+      {
+        "type": "Point",
+        "coordinates": [11.0, 60.2],
+        "address": "Frozen Lake Camp",
+        "description": "Tent stay by a frozen lake",
+        "day": 3
+      }
+    ],
+    "guides": ["665502bb5829f7cda07e3143"]
+  }
+]

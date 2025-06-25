@@ -1,0 +1,32 @@
+extends base
+
+block content
+  .container
+    h1= tour.name
+
+    .tour-details
+      p.description #{tour.description}
+
+      .info-grid
+        p Duration: #{tour.duration} days
+        p Group Size: #{tour.maxGroupSize}
+        p Price: ₹#{tour.price}
+        p Difficulty: #{tour.difficulty}
+        p Average Rating: #{tour.ratingsAverage}
+
+    if tour.guides.length
+      h3 Tour Guides
+      ul.guides-list
+        each guide in tour.guides
+          li #{guide.name} (#{guide.role})
+
+    if tour.reviews.length
+      h3 Reviews
+      .reviews
+        each review in tour.reviews
+          .review-box
+            p= review.review
+            small Rating: #{review.rating}
+
+    h3 Tour Location
+    #map(style="height: 400px; width: 100%; margin-top: 20px;")

@@ -108,17 +108,27 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-exports.restictTo = (...roles) => {
+exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+    if (!req.user || !req.user.role) {
+      return res.status(403).json({
+        status: "fail",
+        message: "You are not logged in or user role not found",
+      });
+    }
+
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         status: "fail",
         message: "You are not authorized to access this route",
       });
     }
+
     next();
   };
 };
+
+
 
 exports.forgotPassword = async (req, res, next) => {
   try {
@@ -135,7 +145,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     const resetURL = `${req.protocol}://${req.get(
       "host"
-    )}/auth/resetPassword/${resetToken}`;
+    )}/api/auth/resetPassword/${resetToken}`;
 
     console.log(`Password reset link: ${resetURL}`);
 
@@ -182,3 +192,13 @@ exports.resetPassword = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000), // expires in 10 seconds
+    httpOnly: true
+  });
+
+  res.status(200).json({ status: 'success' });
+};
+

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
 const tourSchema = new mongoose.Schema(
   {
@@ -42,7 +43,28 @@ const tourSchema = new mongoose.Schema(
         enum: ["Point"],
       },
       coordinates: [Number],
+      address: String,
+      description: String,
     },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: "Point",
+          enum: ["Point"],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -50,22 +72,40 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+
+
+//virtual populate
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour",
+  localField: "_id",
+});
+
 // 🔐 Query Middleware - find hook
 tourSchema.pre(/^find/, function (next) {
-  console.log("Query Middleware is running");
+  // console.log("Query Middleware is running");
   this.find({ secretTour: { $ne: true } });
   this.startTime = Date.now();
   next();
 });
 
-tourSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.startTime}ms`);
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "guides",
+    select: "-__v -passwordChangedAt",
+  });
   next();
 });
 
 // 📊 Aggregation Middleware
 tourSchema.pre("aggregate", function (next) {
-  console.log("Aggregation Middleware is running...");
+  // console.log("Aggregation Middleware is running...");
+  next();
+});
+
+tourSchema.pre("save", async function (next) {
+  const guidesPromises = this.guides.map(async (id) => await User.findById(id));
+  this.guides = await Promise.all(guidesPromises);
   next();
 });
 

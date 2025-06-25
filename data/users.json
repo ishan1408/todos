@@ -1,42 +1,44 @@
 [
   {
-    "id": 1,
-    "name": "Alice Sharma",
-    "email": "alice@example.com",
-    "password": "hashedpassword1",
-    "role": "user",
-    "createdAt": "2025-06-01T10:00:00Z"
+    "_id": "665502bb5829f7cda07e3140",
+    "name": "Ishan Jain",
+    "email": "ishanjain1408@gmail.com",
+    "password": "12345",
+    "role": "admin"
   },
   {
-    "id": 2,
-    "name": "Bob Mehta",
-    "email": "bob@example.com",
-    "password": "hashedpassword2",
-    "role": "admin",
-    "createdAt": "2025-06-02T12:30:00Z"
+    "_id": "665502bb5829f7cda07e3141",
+    "name": "Isha Jain",
+    "email": "ishajain1408@gmail.com",
+    "password": "12345",
+    "role": "user"
   },
   {
-    "id": 3,
-    "name": "Charlie Singh",
-    "email": "charlie@example.com",
-    "password": "hashedpassword3",
-    "role": "user",
-    "createdAt": "2025-06-03T14:20:00Z"
+    "_id": "665502bb5829f7cda07e3142",
+    "name": "Raj Davis",
+    "email": "raj@gmail.com",
+    "password": "12345",
+    "role": "guide"
   },
   {
-    "id": 4,
-    "name": "Diana Verma",
-    "email": "diana@example.com",
-    "password": "hashedpassword4",
-    "role": "instructor",
-    "createdAt": "2025-06-04T09:10:00Z"
+    "_id": "665502bb5829f7cda07e3143",
+    "name": "Monika Lopez",
+    "email": "monika@gmail.com",
+    "password": "12345",
+    "role": "guide"
   },
   {
-    "id": 5,
-    "name": "Ethan Roy",
-    "email": "ethan@example.com",
-    "password": "hashedpassword5",
-    "role": "user",
-    "createdAt": "2025-06-05T17:45:00Z"
+    "_id": "665502bb5829f7cda07e3144",
+    "name": "Swaraj Wright",
+    "email": "swaraj@gmail.com",
+    "password": "12345",
+    "role": "user"
+  },
+  {
+    "_id": "665502bb5829f7cda07e3145",
+    "name": "Rajesh",
+    "email": "rajesh@gmail.com",
+    "password": "12345",
+    "role": "user"
   }
 ]

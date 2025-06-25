@@ -1,0 +1,13 @@
+extends base
+
+block content
+  h1 All Available Tours
+  .tour-container
+    each tour in tours
+      .tour-card
+        h2= tour.name
+        p #{tour.summary}
+        p Price: ₹#{tour.price}
+        p Difficulty: #{tour.difficulty}
+        p Duration: #{tour.duration} days
+        a(href=`/tour/${tour._id}`) View Tour →

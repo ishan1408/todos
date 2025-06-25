@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "68563a13fea35c79412b5e01",
+    "review": "An amazing journey through the forest with stunning views.",
+    "rating": 5,
+    "tour": "665502bb5829f7cda07e3146",
+    "user": "665502bb5829f7cda07e3141",
+    "createdAt": "2025-06-20T08:30:00.000Z"
+  },
+  {
+    "_id": "68563a13fea35c79412b5e02",
+    "review": "Loved the desert safari! Especially the star-lit night experience.",
+    "rating": 4,
+    "tour": "665502bb5829f7cda07e3147",
+    "user": "665502bb5829f7cda07e3144",
+    "createdAt": "2025-06-19T11:45:00.000Z"
+  },
+  {
+    "_id": "68563a13fea35c79412b5e03",
+    "review": "A challenging yet rewarding snow trek. Perfectly organized.",
+    "rating": 5,
+    "tour": "665502bb5829f7cda07e3148",
+    "user": "665502bb5829f7cda07e3144",
+    "createdAt": "2025-06-18T15:20:00.000Z"
+  }
+]
