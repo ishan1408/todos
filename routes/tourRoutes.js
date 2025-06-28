@@ -2,15 +2,24 @@ const express = require("express");
 const tourController = require("../controllers/tourController");
 const authController = require("../controllers/authController");
 const reviewRouter = require("./../routes/reviewRoutes");
+
 const router = express.Router();
 
 router.use(authController.protect);
 router.use("/:tourId/reviews", reviewRouter);
 
+router.route("/tour-stats").get(tourController.getTourStats);
+
 router
   .route("/")
   .get(tourController.getAllTours)
-  .post(authController.restrictTo("admin", "user"), tourController.createTour);
+  .post(
+  authController.restrictTo("admin", "user"),
+  tourController.uploadTourImages,
+  tourController.resizeTourImages,
+  tourController.createTourCustom
+);
+
 
 router
   .route("/:id")
@@ -27,7 +36,6 @@ router
   )
   .delete(authController.restrictTo("admin"), tourController.deleteTour);
 
-router.route("/tour-stats").get(tourController.getTourStats);
 router
   .route("/monthly-plan/:year")
   .get(

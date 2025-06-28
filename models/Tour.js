@@ -25,6 +25,8 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: [true, "A tour must have a price"],
     },
+    imageCover: String,
+    images: [String],
     summary: String,
     description: String,
     createdAt: {
@@ -71,8 +73,6 @@ const tourSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-
 
 //virtual populate
 tourSchema.virtual("reviews", {

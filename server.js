@@ -13,6 +13,7 @@ const tourRoutes = require("./routes/tourRoutes");
 const userRoutes = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const authController = require("./controllers/authController");
+const userRouter = require('./routes/userRoutes');
 
 dotenv.config();
 connectDB();
@@ -101,7 +102,7 @@ app.get('/tour/:id', async (req, res, next) => {
 
     res.status(200).render('tour', {
       title: tour.name,
-      user: "Ishan Jain",
+      user: user.name,
       tour
     });
   } catch (err) {
@@ -135,6 +136,7 @@ app.post("/logout", authController.logout);
 app.use("/api/users", userRoutes);
 app.use("/api/tours", tourRoutes);
 app.use("/api/reviews", reviewRouter);
+app.use('/api/auth', userRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

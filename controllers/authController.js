@@ -2,6 +2,8 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("./../models/User");
+const catchAsync = require('../utils/catchAsync');
+const sendEmail = require('../utils/email');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -195,7 +197,7 @@ exports.resetPassword = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000), // expires in 10 seconds
+    expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
 
